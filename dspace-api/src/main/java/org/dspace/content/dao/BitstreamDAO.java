@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.dspace.content.Bitstream;
+import org.dspace.content.Bundle;
 import org.dspace.content.Collection;
 import org.dspace.content.Community;
 import org.dspace.content.Item;
@@ -42,6 +43,8 @@ public interface BitstreamDAO extends DSpaceObjectLegacySupportDAO<Bitstream> {
     public Iterator<Bitstream> findByItem(Context context, Item item) throws SQLException;
 
     public Iterator<Bitstream> findByStoreNumber(Context context, Integer storeNumber) throws SQLException;
+
+    public Bitstream findFirstInBundle(Context context, Bundle bundle) throws SQLException;
 
     public Long countByStoreNumber(Context context, Integer storeNumber) throws SQLException;
 

@@ -8,24 +8,16 @@
 package org.dspace.content;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.OrderColumn;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import org.dspace.content.factory.ContentServiceFactory;
 import org.dspace.content.service.BundleService;
 import org.dspace.core.Constants;
 import org.dspace.core.Context;
 import org.dspace.core.HibernateProxyHelper;
+import org.hibernate.annotations.SortComparator;
 
 /**
  * Class representing bundles of bitstreams stored in the DSpace system
@@ -54,8 +46,7 @@ public class Bundle extends DSpaceObject implements DSpaceObjectLegacySupport {
         joinColumns = {@JoinColumn(name = "bundle_id")},
         inverseJoinColumns = {@JoinColumn(name = "bitstream_id")}
     )
-    @OrderColumn(name = "bitstream_order")
-    private final List<Bitstream> bitstreams = new ArrayList<>();
+    private final Set<Bitstream> bitstreams = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -130,15 +121,14 @@ public class Bundle extends DSpaceObject implements DSpaceObjectLegacySupport {
     }
 
     /**
-     * Get a copy of the bitstream list of this bundle
-     * Note that this is a copy and if you wish to manipulate the bitstream list, you should use
+     * Get a copy of the bitstream set of this bundle
+     * Note that this is a copy and if you wish to manipulate the bitstream set, you should use
      * {@ref Bundle.addBitstream}, {@ref Bundle.removeBitstream} or {@ref Bundle.clearBitstreams}
      *
      * @return the bitstreams
      */
-    public List<Bitstream> getBitstreams() {
-        List<Bitstream> bitstreamList = new ArrayList<>(this.bitstreams);
-        return bitstreamList;
+    public Set<Bitstream> getBitstreams() {
+        return new HashSet<>(this.bitstreams);
     }
 
     /**
@@ -158,7 +148,7 @@ public class Bundle extends DSpaceObject implements DSpaceObjectLegacySupport {
     }
 
     /**
-     * Remove the given bitstream from this bundles bitstream list
+     * Remove the given bitstream from this bundles bitstream set
      *
      * @param bitstream The bitstream to remove
      */

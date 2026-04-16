@@ -405,7 +405,7 @@ public class ItemExportServiceImpl implements ItemExportService {
 
             for (Bundle bundle : bundles) {
                 // bundles can have multiple bitstreams now...
-                List<Bitstream> bitstreams = bundle.getBitstreams();
+                Set<Bitstream> bitstreams = bundle.getBitstreams();
 
                 String bundleName = bundle.getName();
 
@@ -591,7 +591,7 @@ public class ItemExportServiceImpl implements ItemExportService {
                             List<Bundle> bundles = item.getBundles();
                             for (Bundle bundle : bundles) {
                                 // get all the bitstreams in each bundle
-                                List<Bitstream> bitstreams = bundle.getBitstreams();
+                                Set<Bitstream> bitstreams = bundle.getBitstreams();
                                 for (Bitstream bitstream : bitstreams) {
                                     // add up the size
                                     size += bitstream.getSizeBytes();
@@ -618,7 +618,7 @@ public class ItemExportServiceImpl implements ItemExportService {
                         List<Bundle> bundles = item.getBundles();
                         for (Bundle bundle : bundles) {
                             // get all the bitstreams in the bundle
-                            List<Bitstream> bitstreams = bundle.getBitstreams();
+                            Set<Bitstream> bitstreams = bundle.getBitstreams();
                             for (Bitstream bitstream : bitstreams) {
                                 // add up the size
                                 size += bitstream.getSizeBytes();
@@ -637,7 +637,7 @@ public class ItemExportServiceImpl implements ItemExportService {
                 List<Bundle> bundles = item.getBundles();
                 for (Bundle bundle : bundles) {
                     // get all the bitstreams in the bundle
-                    List<Bitstream> bitstreams = bundle.getBitstreams();
+                    Set<Bitstream> bitstreams = bundle.getBitstreams();
                     for (Bitstream bitstream : bitstreams) {
                         // add up the size
                         size += bitstream.getSizeBytes();

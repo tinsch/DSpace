@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.annotation.ManagedBean;
 import jakarta.inject.Inject;
@@ -221,7 +222,7 @@ public class RequestItemEmailNotifier {
                         Item item = ri.getItem();
                         List<Bundle> bundles = item.getBundles("ORIGINAL");
                         for (Bundle bundle : bundles) {
-                            List<Bitstream> bitstreams = bundle.getBitstreams();
+                            Set<Bitstream> bitstreams = bundle.getBitstreams();
                             for (Bitstream bitstream : bitstreams) {
                                 if (!bitstream.getFormat(context).isInternal() &&
                                         requestItemService.isRestricted(context,

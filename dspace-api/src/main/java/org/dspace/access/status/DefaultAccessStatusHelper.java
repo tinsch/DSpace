@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.Strings;
@@ -149,8 +150,8 @@ public class DefaultAccessStatusHelper implements AccessStatusHelper {
             // If there is no primary bitstream,
             // take the first bitstream in the bundles.
             bitstream = bundles.stream()
-                .map(bundle -> bundle.getBitstreams())
-                .flatMap(List::stream)
+                .map(Bundle::getBitstreams)
+                .flatMap(Set::stream)
                 .findFirst()
                 .orElse(null);
         }

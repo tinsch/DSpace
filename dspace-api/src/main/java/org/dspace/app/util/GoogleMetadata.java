@@ -14,15 +14,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Properties;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
@@ -940,10 +933,11 @@ public class GoogleMetadata {
 
         List<Bundle> contentBundles = itemService.getBundles(item, "ORIGINAL");
         for (Bundle bundle : contentBundles) {
-            List<Bitstream> bitstreams = bundle.getBitstreams();
-            Collections.sort(bitstreams, googleBitstreamComparator);
+            Set<Bitstream> bitstreams = bundle.getBitstreams();
+            SortedSet<Bitstream> sortedBitstreams = new TreeSet<>(googleBitstreamComparator);
+            sortedBitstreams.addAll(bitstreams);
 
-            for (Bitstream candidate : bitstreams) {
+            for (Bitstream candidate : sortedBitstreams) {
                 if (candidate.equals(bundle.getPrimaryBitstream())) { // is primary -> use this one
                     if (isPublic(candidate)) {
                         return candidate;

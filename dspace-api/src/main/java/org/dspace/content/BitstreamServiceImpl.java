@@ -418,27 +418,22 @@ public class BitstreamServiceImpl extends DSpaceObjectServiceImpl<Bitstream> imp
     @Override
     public Bitstream getBitstreamByName(Item item, String bundleName, String bitstreamName) throws SQLException {
         List<Bundle> bundles = itemService.getBundles(item, bundleName);
-        for (int i = 0; i < bundles.size(); i++) {
-            Bundle bundle = bundles.get(i);
-            List<Bitstream> bitstreams = bundle.getBitstreams();
-            for (int j = 0; j < bitstreams.size(); j++) {
-                Bitstream bitstream = bitstreams.get(j);
-                if (Strings.CS.equals(bitstream.getName(), bitstreamName)) {
-                    return bitstream;
-                }
-            }
+        for (Bundle bundle : bundles) {
+            Set<Bitstream> bitstreams = bundle.getBitstreams();
+            return bitstreams.stream().filter(
+                    bitstream -> bitstream.getName().equals(bitstreamName)).findFirst()
+                    .orElse(null);
         }
         return null;
     }
 
     @Override
-    public Bitstream getFirstBitstream(Item item, String bundleName) throws SQLException {
+    public Bitstream getFirstBitstream(Context context, Item item, String bundleName) throws SQLException {
         List<Bundle> bundles = itemService.getBundles(item, bundleName);
         if (CollectionUtils.isNotEmpty(bundles)) {
-            List<Bitstream> bitstreams = bundles.get(0).getBitstreams();
-            if (CollectionUtils.isNotEmpty(bitstreams)) {
-                return bitstreams.get(0);
-            }
+            Bundle bundle = bundles.getFirst();
+            // TODO handle exceptions?
+            return bitstreamDAO.findFirstInBundle(context, bundle);
         }
         return null;
     }

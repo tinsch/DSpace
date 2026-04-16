@@ -154,6 +154,14 @@ public class BitstreamDAOImpl extends AbstractHibernateDSODAO<Bitstream> impleme
     }
 
     @Override
+    public Bitstream findFirstInBundle(Context context, Bundle bundle) throws SQLException {
+        Query query = createQuery(context,
+                "select b2b.bitstream_id from Bundle2Bitstream b2b where b2b.bundle_id = :bundle_id order by bitstream_order asc limit 1");
+        query.setParameter("bundle_id", bundle.getID());
+        return (Bitstream) query.getSingleResult();
+    }
+
+    @Override
     public Long countByStoreNumber(Context context, Integer storeNumber) throws SQLException {
 
 

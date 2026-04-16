@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.content.Bitstream;
@@ -75,7 +76,7 @@ public class DeleteBitstreamsByFilterAction extends UpdateBitstreamsAction {
         List<Bundle> bundles = item.getBundles();
 
         for (Bundle b : bundles) {
-            List<Bitstream> bitstreams = b.getBitstreams();
+            Set<Bitstream> bitstreams = b.getBitstreams();
             String bundleName = b.getName();
 
             for (Bitstream bs : bitstreams) {

@@ -223,10 +223,10 @@ public class ItemServiceImpl extends DSpaceObjectServiceImpl<Item> implements It
 
         } else {
             if (requireOriginal) {
-                primaryBitstream = bitstreamService.getFirstBitstream(item, "ORIGINAL");
+                primaryBitstream = bitstreamService.getFirstBitstream(context, item, "ORIGINAL");
             }
 
-            thumbBitstream = bitstreamService.getFirstBitstream(item, "THUMBNAIL");
+            thumbBitstream = bitstreamService.getFirstBitstream(context, item, "THUMBNAIL");
         }
 
         if (thumbBitstream != null) {

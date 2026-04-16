@@ -11,12 +11,7 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.Strings;
@@ -205,7 +200,7 @@ public class MediaFilterServiceImpl implements MediaFilterService, InitializingB
         boolean done = false;
         for (Bundle myBundle : myBundles) {
             // now look at all of the bitstreams
-            List<Bitstream> myBitstreams = myBundle.getBitstreams();
+            Set<Bitstream> myBitstreams = myBundle.getBitstreams();
 
             for (Bitstream myBitstream : myBitstreams) {
                 done |= filterBitstream(context, myItem, myBitstream);
@@ -336,7 +331,7 @@ public class MediaFilterServiceImpl implements MediaFilterService, InitializingB
         if (!bundles.isEmpty()) {
             // only finds the last matching bundle and all matching bitstreams in the proper bundle(s)
             for (Bundle bundle : bundles) {
-                List<Bitstream> bitstreams = bundle.getBitstreams();
+                Set<Bitstream> bitstreams = bundle.getBitstreams();
 
                 for (Bitstream bitstream : bitstreams) {
                     if (bitstream.getName().trim().equals(newName.trim())) {

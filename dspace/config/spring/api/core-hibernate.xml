@@ -21,6 +21,8 @@
                 <prop key='hibernate.javax.cache.uri'>
                     file:${dspace.dir}/config/hibernate-ehcache-config.xml
                 </prop>
+                <prop key="hibernate.session.events.log.LOG_QUERIES_SLOWER_THAN_MS">20</prop>
+                <prop key="hibernate.format_sql">true</prop>
             </props>
         </property>
     </bean>
